@@ -1,82 +1,44 @@
 import ballerina/ai;
-import ballerina/io;
 
-final ai:Agent mathTutorAgent = check new (
+final ai:Agent customerSupportAgent = check new (
     systemPrompt = {
-        role: string `Math Tutor Assistant`,
-        instructions: string `You are a math tutor assistant.
-
-RULES (MUST FOLLOW):
-
-* You MUST use the provided mathematical tools (add, subtract, multiply, divide) for ALL calculations, even simple ones.
-* You are NOT allowed to compute results mentally or inline.
-* If a calculation is required and a tool is available, you MUST call the tool.
-* If you do not call a tool when a calculation is required, the response is invalid.
-
-Provide clear, step-by-step explanations. Include the final answer at the end.`
-    }, memory = aiShorttermmemory, model = mathTutorModel, tools = [sumTool, subtractTool, multiplyTool, divideTool, messageToAdmin, reportuserInfo]
+        role: string `Customer Support Assistant`,
+        instructions: string `You are a friendly customer support assistant for an online store.
+Help customers check their order status, understand the return policy, and raise support tickets.
+Always use the provided tools to look up orders and create tickets. Never guess order details.
+Keep every reply short and conversational: one or two sentences, with no Markdown, lists, or code.`
+    }, memory = aiShorttermmemory, model = supportModel, tools = [getOrderStatus, getReturnPolicy, createSupportTicket]
 );
 
-# Calculates the sum of two numbers
+# Gets the current status of an order.
 #
-# + num1 - The first number
-# + num2 - The second number
-# + return - The sum of num1 and num2
+# + orderId - The order ID, for example ORD-1001
+# + return - The order details, or an error if the order isn't found
 @ai:AgentTool
-@display {label: "", iconPath: ""}
-isolated function sumTool(float num1, float num2) returns float {
-    return num1 + num2;
-}
-
-# Calculates the difference of two numbers
-#
-# + num1 - The first number
-# + num2 - The second number
-# + return - The difference of num1 and num2
-@ai:AgentTool
-@display {label: "", iconPath: ""}
-isolated function subtractTool(float num1, float num2) returns float {
-    return num1 - num2;
-}
-
-# Calculates the product of two numbers
-#
-# + num1 - The first number
-# + num2 - The second number
-# + return - The product of num1 and num2
-@ai:AgentTool
-@display {label: "", iconPath: ""}
-isolated function multiplyTool(float num1, float num2) returns float {
-    return num1 * num2;
-}
-
-# Calculates the division of two numbers
-# Handles division by zero
-# If num2 is zero, returns 0
-# Otherwise, returns the result of the division
-#
-# + num1 - The dividend (numerator)
-# + num2 - The divisor (denominator)
-# + return - The quotient of num1 divided by num2, or 0 if num2 is zero
-@ai:AgentTool
-@display {label: "", iconPath: ""}
-isolated function divideTool(float num1, float num2) returns float {
-    if (num2 == 0.0) {
-        return 0.0;
+isolated function getOrderStatus(string orderId) returns Order|error {
+    Order? 'order = orders[orderId.toUpperAscii()];
+    if 'order is () {
+        return error(string `No order found with ID ${orderId}`);
     }
-    return num1 / num2;
+    return 'order;
 }
 
+# Gets the store's return policy.
+#
+# + return - The return policy
 @ai:AgentTool
-isolated function messageToAdmin() returns string {
-    io:println("Successfully Sent");
-    return "successfully sent message";
+isolated function getReturnPolicy() returns string {
+    return "Items can be returned within 30 days of delivery for a full refund. Items must be unused and in their original packaging.";
 }
 
+# Creates a support ticket for an issue the customer reports.
+#
+# + customerEmail - The customer's email address
+# + issue - A short description of the issue
+# + return - The ID of the created ticket
 @ai:AgentTool
-isolated function reportuserInfo(UserInfo UserInfo) returns string {
-    io:println(UserInfo);
-    return "reported";
+isolated function createSupportTicket(string customerEmail, string issue) returns string {
+    return string `TCK-${customerEmail.length() + issue.length() + 4000}`;
 }
 
 final ai:ShortTermMemory aiShorttermmemory = check new (aiInmemoryshorttermmemorystore);

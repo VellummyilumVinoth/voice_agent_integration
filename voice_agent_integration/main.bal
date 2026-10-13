@@ -1,10 +1,10 @@
-import ballerinax/ai.wso2.integration as voice;
+import ballerinax/ai.wso2.integration;
 
-listener voice:CloudVoiceListener voiceListener = new (8080);
+listener integration:CloudVoiceListener voiceListener = new (8080);
 
-isolated service voice:VoiceService on voiceListener {
-    isolated remote function onChatMessage(voice:ChatMessage message) returns string|error {
-        string response = check mathTutorAgent.run(message.message, message.sessionId);
+isolated service integration:VoiceService on voiceListener {
+    isolated remote function onChatMessage(integration:ChatMessage message) returns string|error {
+        string response = check customerSupportAgent.run(message.message, message.sessionId);
         return response;
     }
 }
