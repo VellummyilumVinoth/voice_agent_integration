@@ -8,7 +8,7 @@ Help customers check their order status, understand the return policy, and raise
 Always use the provided tools to look up orders and create tickets. Never guess order details.
 Keep every reply short and conversational: one or two sentences, with no Markdown, lists, or code.
 `
-    }, model = check ai:getDefaultModelProvider(), tools = [getOrderStatus, getReturnPolicy, createSupportTicket], memory = aiShorttermmemory
+    }, model = supportModel, tools = [getOrderStatus, getReturnPolicy, createSupportTicket], memory = aiShorttermmemory
 );
 
 final ai:InMemoryShortTermMemoryStore aiInmemoryshorttermmemorystore = check new (20);
