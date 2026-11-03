@@ -370,12 +370,119 @@ dependencies = [
 ]
 
 [[package]]
+org = "ballerina"
+name = "websocket"
+version = "2.16.1"
+dependencies = [
+	{org = "ballerina", name = "auth"},
+	{org = "ballerina", name = "constraint"},
+	{org = "ballerina", name = "http"},
+	{org = "ballerina", name = "io"},
+	{org = "ballerina", name = "jballerina.java"},
+	{org = "ballerina", name = "jwt"},
+	{org = "ballerina", name = "lang.array"},
+	{org = "ballerina", name = "lang.runtime"},
+	{org = "ballerina", name = "lang.string"},
+	{org = "ballerina", name = "lang.value"},
+	{org = "ballerina", name = "log"},
+	{org = "ballerina", name = "oauth2"},
+	{org = "ballerina", name = "time"}
+]
+
+[[package]]
+org = "ballerinai"
+name = "observe"
+version = "0.0.0"
+dependencies = [
+	{org = "ballerina", name = "jballerina.java"},
+	{org = "ballerina", name = "observe"}
+]
+
+[[package]]
+org = "ballerinax"
+name = "ai.openai"
+version = "1.4.1"
+dependencies = [
+	{org = "ballerina", name = "ai"},
+	{org = "ballerina", name = "constraint"},
+	{org = "ballerina", name = "http"},
+	{org = "ballerina", name = "jballerina.java"},
+	{org = "ballerina", name = "lang.array"},
+	{org = "ballerina", name = "lang.regexp"},
+	{org = "ballerina", name = "log"},
+	{org = "ballerinax", name = "openai.chat"},
+	{org = "ballerinax", name = "openai.embeddings"},
+	{org = "ballerinax", name = "openai.responses"}
+]
+modules = [
+	{org = "ballerinax", packageName = "ai.openai", moduleName = "ai.openai"}
+]
+
+[[package]]
+org = "ballerinax"
+name = "ai.wso2.integration"
+version = "1.1.1"
+dependencies = [
+	{org = "ballerina", name = "ai"},
+	{org = "ballerina", name = "data.jsondata"},
+	{org = "ballerina", name = "http"},
+	{org = "ballerina", name = "io"},
+	{org = "ballerina", name = "log"},
+	{org = "ballerina", name = "uuid"},
+	{org = "ballerina", name = "websocket"}
+]
+modules = [
+	{org = "ballerinax", packageName = "ai.wso2.integration", moduleName = "ai.wso2.integration"}
+]
+
+[[package]]
+org = "ballerinax"
+name = "openai.chat"
+version = "5.0.0"
+dependencies = [
+	{org = "ballerina", name = "constraint"},
+	{org = "ballerina", name = "data.jsondata"},
+	{org = "ballerina", name = "http"},
+	{org = "ballerina", name = "log"},
+	{org = "ballerina", name = "os"},
+	{org = "ballerina", name = "url"},
+	{org = "ballerinai", name = "observe"}
+]
+
+[[package]]
+org = "ballerinax"
+name = "openai.embeddings"
+version = "1.0.6"
+dependencies = [
+	{org = "ballerina", name = "constraint"},
+	{org = "ballerina", name = "http"},
+	{org = "ballerina", name = "url"},
+	{org = "ballerinai", name = "observe"}
+]
+
+[[package]]
+org = "ballerinax"
+name = "openai.responses"
+version = "1.0.0"
+dependencies = [
+	{org = "ballerina", name = "constraint"},
+	{org = "ballerina", name = "data.jsondata"},
+	{org = "ballerina", name = "http"},
+	{org = "ballerina", name = "log"},
+	{org = "ballerina", name = "os"},
+	{org = "ballerina", name = "url"},
+	{org = "ballerinai", name = "observe"}
+]
+
+[[package]]
 org = "vinoth"
 name = "voiceagentintegration"
 version = "0.1.0"
 dependencies = [
 	{org = "ballerina", name = "ai"},
-	{org = "ballerina", name = "http"}
+	{org = "ballerina", name = "http"},
+	{org = "ballerinax", name = "ai.openai"},
+	{org = "ballerinax", name = "ai.wso2.integration"}
 ]
 modules = [
 	{org = "vinoth", packageName = "voiceagentintegration", moduleName = "voiceagentintegration"}
