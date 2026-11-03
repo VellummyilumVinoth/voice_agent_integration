@@ -20,3 +20,4 @@ isolated service integration:VoiceService on voiceListener {
         return response;
     }
 }
+
